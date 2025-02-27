@@ -113,34 +113,6 @@ xorriso_copyout() {
     $XORRISO -dev stdio:"$1" -osirrox on -extract "$2" "$3" >/dev/null 2>&1
 }
 
-xorriso_copyin() {
-    if test -z "$XORRISO"; then
-        return 1
-    fi
-    $XORRISO -dev stdio:"$1" -cpr "$3" "$2" >/dev/null 2>&1
-}
-
-xorriso_mkdir() {
-    if test -z "$XORRISO"; then
-        return 1
-    fi
-    $XORRISO -dev stdio:"$1" -mkdir "$2" >/dev/null 2>&1
-}
-
-xorriso_rmdir() {
-    if test -z "$XORRISO"; then
-        return 1
-    fi
-    $XORRISO -dev stdio:"$1" -rmdir "$2" >/dev/null 2>&1
-}
-
-xorriso_rm() {
-    if test -z "$XORRISO"; then
-        return 1
-    fi
-    $XORRISO -dev stdio:"$1" -rm "$2" >/dev/null 2>&1
-}
-
 # tested to comply with isoinfo 2.0's output
 test_iso () {
     ISOINFO=`command -v isoinfo 2>/dev/null`
@@ -260,30 +232,6 @@ case "$cmd" in
     xorriso_list "$@" || {
         test_iso "$@" || exit 1
         mcisofs_list "$@" || exit 1
-    }
-    exit 0
-    ;;
-  rm)
-    xorriso_rm "$@" || {
-        exit 1
-    }
-    exit 0
-    ;;
-  rmdir)
-    xorriso_rmdir "$@" || {
-        exit 1
-    }
-    exit 0
-    ;;
-  mkdir)
-    xorriso_mkdir "$@" || {
-        exit 1
-    }
-    exit 0
-    ;;
-  copyin)
-    xorriso_copyin "$@" || {
-        exit 1
     }
     exit 0
     ;;
